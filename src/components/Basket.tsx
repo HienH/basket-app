@@ -19,6 +19,11 @@ const Basket = ({ basket, deleteFromBasket }: BasketProps) => {
             0
         );
     };
+
+    const checkout = () => {
+        alert("Congratulation, (*insert route to Checkout page 😊)");
+    };
+
     return (
         <div className="basket">
             <h2 style={{ fontFamily: "Lexend Mega", marginTop: "40px" }}>
@@ -47,14 +52,14 @@ const Basket = ({ basket, deleteFromBasket }: BasketProps) => {
             )}
 
             <h4 className="final-cost">
-                Final Cost: £{finalCost()}
+                Final Cost: £{finalCost().toFixed(2)}
                 <Button
                     style={{ width: "100%", marginTop: "10px" }}
                     variant="contained"
                     color="primary"
-                    // onClick={() => {
-                    //     buttonClick(product);
-                    // }}
+                    onClick={() => {
+                        checkout();
+                    }}
                 >
                     Checkout
                 </Button>

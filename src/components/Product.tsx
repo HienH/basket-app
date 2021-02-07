@@ -22,7 +22,7 @@ const Product = ({ product, buttonName, buttonClick }: ProductProps) => {
         >
             <img src={product.image} style={imageStyle} alt={product.title} />
             <p>{product.title}</p>
-            <p>£{product.price}</p>
+            <p>£{product.price.toFixed(2)}</p>
             <div className="action-button">
                 <Button
                     style={{ width: "100%" }}
