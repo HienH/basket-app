@@ -1,45 +1,27 @@
 import "./App.css";
 import Header from "./components/Header";
+import { useQuery } from "react-query";
 import { useState } from "react";
 import { IProduct } from "./models/IProduct";
 import Product from "./components/Product";
 import Drawer from "@material-ui/core/Drawer";
 import Basket from "./components/Basket";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const App = () => {
+    const API_URL = "https://fakestoreapi.com/products";
     const [cartOpen, setCartOpen] = useState(false);
     const [basket, setBasket] = useState<IProduct[]>([]);
-    const [allProducts, setAllProducts] = useState<IProduct[]>([
-        {
-            id: 1,
-            title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-            price: 10,
-            image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-            amount: 0,
-        },
-        {
-            id: 2,
-            title: "Mens Casual Premium Slim Fit T-Shirts",
-            price: 5,
-            image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-            amount: 0,
-        },
-        {
-            id: 3,
-            title: "Mens Casual Premium Slim Fit T-Shirts",
-            price: 5,
-            image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-            amount: 0,
-        },
-        {
-            id: 4,
-            title: "Mens Casual Premium Slim Fit T-Shirts",
-            price: 5,
-            image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-            amount: 0,
-        },
-    ]);
 
+    const getProducts = async (): Promise<IProduct[]> => {
+        const res = await fetch(API_URL);
+        return await res.json();
+    };
+
+    const { data, isLoading, error } = useQuery<IProduct[]>(
+        "products",
+        getProducts
+    );
     const addToBasket = (productToAdd: IProduct) => {
         // check if product is in array
         const isInBasket = basket.findIndex(
@@ -81,6 +63,8 @@ const App = () => {
         return basket.reduce((ack: number, product) => ack + product.amount, 0);
     };
 
+    if (isLoading) return <CircularProgress />;
+    if (error) return <p>Sorry something went wrong, please try again later</p>;
     return (
         <div className="App">
             <Header
@@ -90,7 +74,7 @@ const App = () => {
                 }}
             />
             <div className="grid">
-                {allProducts.map((product) => {
+                {data?.map((product) => {
                     return (
                         <Product
                             buttonClick={addToBasket}
