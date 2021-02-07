@@ -10,28 +10,37 @@ interface ProductProps {
 const Product = ({ product, buttonName, buttonClick }: ProductProps) => {
     return (
         <div
-            className=" grid-template-columns"
-            style={{ borderStyle: "solid" }}
+            style={{
+                margin: "40px",
+                height: "300px",
+                overflow: "hidden",
+                position: "relative",
+                border: "2px solid #d3d3d3 ",
+                borderRadius: "30px",
+                alignItems: "center",
+            }}
         >
-            <img
-                src={product.image}
-                width="30%"
-                height="40%"
-                alt={product.title}
-            />
+            <img src={product.image} style={imageStyle} alt={product.title} />
             <p>{product.title}</p>
             <p>£{product.price}</p>
-            <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => {
-                    buttonClick(product);
-                }}
-            >
-                {buttonName}
-            </Button>
+            <div className="action-button">
+                <Button
+                    style={{ width: "100%" }}
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                        buttonClick(product);
+                    }}
+                >
+                    {buttonName}
+                </Button>
+            </div>
         </div>
     );
 };
 
+const imageStyle = {
+    height: "100px",
+    paddingTop: "20px",
+};
 export default Product;

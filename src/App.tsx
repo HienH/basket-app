@@ -6,7 +6,7 @@ import { IProduct } from "./models/IProduct";
 import Product from "./components/Product";
 import Drawer from "@material-ui/core/Drawer";
 import Basket from "./components/Basket";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const App = () => {
     const API_URL = "https://fakestoreapi.com/products";
@@ -63,8 +63,13 @@ const App = () => {
         return basket.reduce((ack: number, product) => ack + product.amount, 0);
     };
 
-    if (isLoading) return <CircularProgress />;
-    if (error) return <p>Sorry something went wrong, please try again later</p>;
+    if (isLoading) return <LinearProgress />;
+    if (error)
+        return (
+            <h2 className="error-message">
+                Sorry something went wrong, please try again later
+            </h2>
+        );
     return (
         <div className="App">
             <Header
@@ -76,12 +81,14 @@ const App = () => {
             <div className="grid">
                 {data?.map((product) => {
                     return (
-                        <Product
-                            buttonClick={addToBasket}
-                            buttonName="Add"
-                            key={product.id}
-                            product={product}
-                        />
+                        <div className=" grid-template-columns">
+                            <Product
+                                buttonClick={addToBasket}
+                                buttonName="Add"
+                                key={product.id}
+                                product={product}
+                            />
+                        </div>
                     );
                 })}
             </div>

@@ -1,9 +1,32 @@
 .App {
     text-align: center;
+    font-family: "Lexend Mega";
 }
 
 .grid {
     display: grid;
-
+    grid-gap: 1px;
     grid-template-columns: repeat(4, 1fr);
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+}
+
+.action-button {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+}
+.basket {
+    text-align: center;
+    font-family: "Lexend Mega";
+}
+
+.final-cost {
+    background-color: #c4ffea;
+    padding: 20px;
+    font-size: 23px;
+    font-family: "Lexend Mega";
 }
