@@ -3,7 +3,7 @@ export class IProduct {
     image: string;
     title: string;
     price: number;
-    amount?: number;
+    amount: number;
 
     constructor() {
         this.id = 0;

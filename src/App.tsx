@@ -15,44 +15,76 @@ const App = () => {
             title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
             price: 10,
             image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+            amount: 0,
         },
         {
             id: 2,
             title: "Mens Casual Premium Slim Fit T-Shirts",
             price: 5,
             image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+            amount: 0,
         },
         {
             id: 3,
             title: "Mens Casual Premium Slim Fit T-Shirts",
             price: 5,
             image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+            amount: 0,
         },
         {
             id: 4,
             title: "Mens Casual Premium Slim Fit T-Shirts",
             price: 5,
             image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
+            amount: 0,
         },
     ]);
 
     const addToBasket = (productToAdd: IProduct) => {
-        setBasket([...basket, productToAdd]);
-    };
-    const deleteFromBasket = (productToDelete: IProduct) => {
-        const newBasket = basket.filter(
-            (product) => product.id != productToDelete.id
+        // check if product is in array
+        const isInBasket = basket.findIndex(
+            (product) => product.id == productToAdd.id
         );
-        setBasket(newBasket);
+        if (isInBasket != -1) {
+            setBasket((prevBasket) => {
+                return prevBasket.map((product) =>
+                    product.id === productToAdd.id
+                        ? { ...product, amount: product.amount + 1 }
+                        : product
+                );
+            });
+        } else {
+            setBasket([...basket, { ...productToAdd, amount: 1 }]);
+        }
     };
 
-    const getProductCount = (products: IProduct[]) => {
-        return basket.length;
+    const deleteFromBasket = (productToDelete: IProduct) => {
+        // if more than one in basket
+        if (productToDelete.amount > 1) {
+            setBasket((prevBasket) => {
+                return prevBasket.map((product) =>
+                    product.id === productToDelete.id
+                        ? { ...product, amount: product.amount - 1 }
+                        : product
+                );
+            });
+        } else {
+            setBasket(
+                basket.filter(
+                    (prevBasket) => prevBasket.id != productToDelete.id
+                )
+            );
+        }
     };
+
+    const getProductCount = () => {
+        return basket.reduce((ack: number, product) => ack + product.amount, 0);
+    };
+
     return (
         <div className="App">
             <Header
-                basketCount={getProductCount(basket)}
+                basketCount={getProductCount()}
                 setCartOpen={() => {
                     setCartOpen(true);
                 }}
