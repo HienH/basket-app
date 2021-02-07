@@ -9,7 +9,7 @@ export interface BasketProps {
 const Basket = ({ basket, deleteFromBasket }: BasketProps) => {
     return (
         <>
-            <h1>Basket</h1>;
+            <h1>Your Shopping Basket</h1>
             {basket.map((product) => {
                 return (
                     <Product

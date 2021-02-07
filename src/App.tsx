@@ -46,9 +46,13 @@ const App = () => {
         setBasket(newBasket);
     };
 
+    const getProductCount = (products: IProduct[]) => {
+        return basket.length;
+    };
     return (
         <div className="App">
             <Header
+                basketCount={getProductCount(basket)}
                 setCartOpen={() => {
                     setCartOpen(true);
                 }}

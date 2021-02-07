@@ -20,7 +20,7 @@ const Product = ({ product, buttonName, buttonClick }: ProductProps) => {
                 alt={product.title}
             />
             <p>{product.title}</p>
-            <p>{product.price}</p>
+            <p>£{product.price}</p>
             <Button
                 variant="outlined"
                 color="secondary"
